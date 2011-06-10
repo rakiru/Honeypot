@@ -2,7 +2,6 @@
 package com.argo.bukkit.honeypot;
 
 import org.bukkit.ChatColor;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,8 +43,7 @@ public class CmdHoneypot implements CommandExecutor {
     		else if(args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
     			sender.sendMessage(ChatColor.GREEN + "Reloading honeypot data from saved file...");
     			
-    			World w = plugin.getDefaultWorld();
-    			if(!Honeyfarm.refreshData(w)) {
+    			if(!Honeyfarm.refreshData()) {
     				sender.sendMessage(ChatColor.DARK_RED + "Failed to load data.");
     			}
     		}

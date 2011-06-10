@@ -15,24 +15,27 @@ import com.argo.bukkit.util.BansHandler;
 public class Honeypot extends JavaPlugin {
 	private final HoneypotBlockListener blockListener = new HoneypotBlockListener(this);
 	private final HoneypotPlayerListener playerListener = new HoneypotPlayerListener(this);
+	
+	private static Honeypot instance;
 
-	/** Plugin was only originally designed to handle single default world. This method returns the
-	 * world it's operating on so future calls to HoneyFarm.refreshData() can operate on the same world.
+	/** I think there's a correct "PluginManager" way to get plugin instances, but
+	 * I'm cheating and using a static instance ala the Singleton pattern for now.
 	 * 
 	 * @return
-	 * @author morganm
 	 */
-	public World getDefaultWorld() {
-		return getServer().getWorlds().get(0);
+	public static Honeypot getCurrentInstance() {
+		return instance;
 	}
 	
 	public void onEnable() {
+		instance = this;
+		
 		createDirs();
 
 		if(!Settings.load()) {
 			System.out.println("Honeypot: an error occured while trying to load the properties file.");
 		}
-		if(!Honeyfarm.refreshData(getDefaultWorld())) {
+		if(!Honeyfarm.refreshData()) {
 			System.out.println("Honeypot: an error occured while trying to load the honeypot list.");
 		}
 		if(!HoneypotPermissionsHandler.setupPermissions(this)) {

@@ -17,6 +17,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.argo.util.TextFileHandler;
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 /** Originally this class just kept a List of all HoneyPot blocks and iterated over that list for
  * every block break.  This is probably actually very efficient when there are a small number of
@@ -60,21 +61,47 @@ public class Honeyfarm {
 	private static List<String> potSelectUsers = new ArrayList<String>();
 	
 	private static int minX = 0, maxX = 0, minY = 0, maxY = 0, minZ = 0, maxZ = 0;
+	private static World boundsWorld = null;
 	private static boolean useHash = false;
+	private static boolean useBoundsChecking = false;
 
-	public static boolean refreshData(World w) {
+	public static boolean refreshData() {
 		TextFileHandler r = new TextFileHandler(potListPath);
 		potsMap.clear();
 		potsList.clear();
 		try {
 			List<String> list = r.readLines();
 			String[] coord;
+			
+			int line = 0;
 			while(!list.isEmpty()) {
+				line++;
+				
 				coord = list.remove(0).split(",");
-				if(coord.length == 3) {
+				if(coord.length == 4)
+				{
+					World w = Honeypot.getCurrentInstance().getServer().getWorld(coord[0]);
+					if( w == null ) {
+						log.warning("[Honeypot] Skipping line "+line+": no World defined for world "+coord[0]);
+						continue;
+					}
+
+					potsList.add(new Location(w, new Double(coord[1]), new Double(coord[2]), new Double(coord[3])));
+					potsMap.put(new Location(w, new Double(coord[1]), new Double(coord[2]), new Double(coord[3])), Boolean.TRUE);
+				}
+				else if(coord.length == 3) {
+					// for backwards compatibility, if no world specified, just assume "world"
+					World w = Honeypot.getCurrentInstance().getServer().getWorld("world");
+					if( w == null ) {
+						log.warning("[Honeypot] Skipping line "+line+": line using old-style definition, tried to assume for world \"world\", but no \"world\" found");
+						continue;
+					}
+
 					potsList.add(new Location(w, new Double(coord[0]), new Double(coord[1]), new Double(coord[2])));
 					potsMap.put(new Location(w, new Double(coord[0]), new Double(coord[1]), new Double(coord[2])), Boolean.TRUE);
 				}
+				else
+					log.warning("[Honeypot] Skipping line "+line+": incorrect number of data elements");
 			}
 			
 			calculateBounds();
@@ -94,11 +121,25 @@ public class Honeyfarm {
 	 * Any block breaks outside these bounds will be ignored.
 	 */
 	private static void calculateBounds() {
+		// start by assuming boundsChecking is true, change it to false if we find a condition otherwise
+		useBoundsChecking = true;
+
+		World world = null;
+		
 		for(Location l : potsMap.keySet()) {
 			int x, y, z;
 			x = l.getBlockX();
 			y = l.getBlockY();
 			z = l.getBlockZ();
+			
+			// Check to see if the world of this block differs from the last, if so, we disable
+			// bounds checking and stop checking the rest of the blocks.
+			World w = l.getWorld();
+			if( boundsWorld != null && !w.equals(boundsWorld) ) {
+				useBoundsChecking = false;
+				break;
+			}
+			boundsWorld = w;
 			
 			if( x < minX || minX == 0 )
 				minX = x;
@@ -123,6 +164,10 @@ public class Honeyfarm {
 				minX, maxX, minY, maxY, minZ, maxZ);
 		log.info(sb.toString());
 		*/
+		
+		// we only use boundsChecking if the honeypot blocks are all located in same general area
+		if( (maxX - minX < 300) && (maxZ - minZ < 300) && (maxY - minY < 30) )
+			useBoundsChecking = false;
 	}
 
 	public static boolean saveData() {
@@ -131,7 +176,7 @@ public class Honeyfarm {
 		List<String> tmp = new ArrayList<String>();
 
 		for(Location loc : potsMap.keySet()) {
-			tmp.add(loc.getX() + "," + loc.getY() + "," + loc.getZ());
+			tmp.add(loc.getWorld().getName() + "," + loc.getX() + "," + loc.getY() + "," + loc.getZ());
 		}
 		try {
 			r.writeLines(tmp);
@@ -156,25 +201,28 @@ public class Honeyfarm {
 		
 		// do efficient bounds checking. if the location is outside of our calculated honeypot bounds, it's
 		// obviously not a honeypot block, no need to do a Hash lookup for the block.
-		if( x >= minX && x <= maxX && y >= minY && y <= maxY && z >= minZ && z <= maxZ ) {
-			if( useHash ) {
-//				log.debug("doing isPot hash lookup");
-				Boolean b = potsMap.get(loc);
-				if( Boolean.TRUE.equals(b) )
-					return true;
-				else
-					return false;
-			}
-			else {
-				if( potsList.contains(loc) )
-					return true;
-				else
-					return false;
-			}
+		if( useBoundsChecking ) {
+			if( !loc.getWorld().equals(boundsWorld) )
+				return false;
+			
+			if( x < minX && x > maxX && y < minY && y > maxY && z < minZ && z > maxZ )
+				return false;
 		}
-		// the block is NOT within the honeypot block bounds, so it's obviously not a honeypot block
-		else
-			return false;
+		
+		if( useHash ) {
+//			log.debug("doing isPot hash lookup");
+			Boolean b = potsMap.get(loc);
+			if( Boolean.TRUE.equals(b) )
+				return true;
+			else
+				return false;
+		}
+		else {
+			if( potsList.contains(loc) )
+				return true;
+			else
+				return false;
+		}
 	}
 
 	public static void createPot(Location loc) {
