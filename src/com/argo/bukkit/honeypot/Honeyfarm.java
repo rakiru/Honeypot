@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.argo.util.TextFileHandler;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 /** Originally this class just kept a List of all HoneyPot blocks and iterated over that list for
  * every block break.  This is probably actually very efficient when there are a small number of
@@ -43,7 +41,6 @@ import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
  *
  */
 public class Honeyfarm {
-	@SuppressWarnings("unused")
 	private static final Logger log = Logger.getLogger(Honeyfarm.class.toString());
 	
 	/* This sets the value at which the HashMap checking kicks in instead of List checks. I haven't
@@ -54,7 +51,7 @@ public class Honeyfarm {
 	private static final int HASH_CUTOFF_BLOCKS = 5;
 	
 	private static final String potListPath = "plugins/Honeypot/list.ncsv";
-	private static final String logPath = "plugins/Honeypot/honeypot.log";
+	private static String logPath;
 
 	private static List<Location> potsList = new ArrayList<Location>();
 	private static Map<Location, Boolean> potsMap = new HashMap<Location, Boolean>();
@@ -64,7 +61,11 @@ public class Honeyfarm {
 	private static World boundsWorld = null;
 	private static boolean useHash = false;
 	private static boolean useBoundsChecking = false;
-
+	
+	public static void setLogPath(String logPath) {
+		Honeyfarm.logPath = logPath;
+	}
+	
 	public static boolean refreshData() {
 		TextFileHandler r = new TextFileHandler(potListPath);
 		potsMap.clear();

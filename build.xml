@@ -3,6 +3,7 @@
 
 	<property name="src.home" location="src" />
 	<property name="build.home" location="bin" />
+	<property name="config.home" location="src" />
 	<property name="dist.home" location="dist" />
 	<property name="jarfile" location="${dist.home}/Honeypot.jar" />
 
@@ -21,6 +22,12 @@
 	</target>
 
 	<target name="dist" depends="compile" description="Generates distribution jar file">
+                <copy todir="${build.home}">
+                        <fileset dir="${config.home}">
+                                <include name="**/*.yml"/>
+                        </fileset>
+                </copy>
+
 		<jar jarfile="${jarfile}" basedir="${build.home}" />
 	</target>
 </project>

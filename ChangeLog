@@ -1,9 +1,12 @@
+v0.7.1 - July 3, 2011
+- added 'logpath' config option, defaults to "plugins/Honeypot/honeypot.log"
+
 v0.7
-  - fixed bug on saving that caused data file to be wiped out
-  - made multiworld compatible
-  - performance improvements, since this is called on every block break and
-    was previously not very efficient for a large number of Honeypot blocks
-  - added ant build script for building jar
+- fixed bug on saving that caused data file to be wiped out
+- made multiworld compatible
+- performance improvements, since this is called on every block break and
+was previously not very efficient for a large number of Honeypot blocks
+- added ant build script for building jar
 
 v6
-  - last release by @aArgomirr
+- last release by @aArgomirr

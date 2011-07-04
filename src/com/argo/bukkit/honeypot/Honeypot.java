@@ -35,6 +35,9 @@ public class Honeypot extends JavaPlugin {
 		if(!Settings.load()) {
 			System.out.println("Honeypot: an error occured while trying to load the properties file.");
 		}
+		
+		Honeyfarm.setLogPath(Settings.getLogPath());
+		
 		if(!Honeyfarm.refreshData()) {
 			System.out.println("Honeypot: an error occured while trying to load the honeypot list.");
 		}
@@ -83,5 +86,5 @@ public class Honeypot extends JavaPlugin {
 		new File("plugins/Honeypot").mkdir();
 	}
 
-
+	public String getLogPath() { return Settings.getLogPath(); }
 }

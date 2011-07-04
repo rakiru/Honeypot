@@ -15,6 +15,7 @@ public class Settings {
     private static boolean doKick = true;
     private static boolean doBan = false;
     private static boolean doShout = true;
+    private static String logPath = "plugins/Honeypot/honeypot.log";
 
     public static boolean load() {
 	PropertyHandler props = new PropertyHandler();
@@ -29,6 +30,7 @@ public class Settings {
 		props.setBoolean("kick", doKick);
 		props.setBoolean("ban", doBan);
 		props.setBoolean("notify-online-players", doShout);
+		props.setString("logpath", logPath);
 
 		props.store(new FileOutputStream(propertiesPath), null);
 	    } else {
@@ -39,6 +41,7 @@ public class Settings {
 		doKick = props.getBoolean("kick", doKick);
 		doBan = props.getBoolean("ban", doBan);
 		doShout = props.getBoolean("notify-online-players", doShout);
+		logPath = props.getString("logpath", logPath);
 	    }
 	} catch (Exception ex) {
 	    return false;
@@ -70,5 +73,9 @@ public class Settings {
 
     public static boolean getShoutFlag() {
 	return doShout;
+    }
+    
+    public static String getLogPath() {
+    	return logPath;
     }
 }

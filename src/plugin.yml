@@ -1,7 +1,7 @@
 name: Honeypot
 main: com.argo.bukkit.honeypot.Honeypot
-version: 0.7
-author: Argomirr
+version: 0.7.1
+author: Argomirr,morganm
 commands:
  honeypot:
   description: Enables Op's to create honeypots by right clicking a block with a wooden axe.
