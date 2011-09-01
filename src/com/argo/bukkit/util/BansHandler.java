@@ -1,11 +1,14 @@
-
 package com.argo.bukkit.util;
 
 import com.firestar.mcbans.mcbans;
 import com.firestar.mcbans.mcbans_handler;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
 
 public class BansHandler {
     private static mcbans_handler mcb;
@@ -16,9 +19,16 @@ public class BansHandler {
 	if(test == null) //Compatibility for older MCBans releases
 	    test = plugin.getServer().getPluginManager().getPlugin("MCBans");
 
+        Plugin test2 = plugin.getServer().getPluginManager().getPlugin("EasyBan");
+	if(test2 == null) //Compatibility for older EasyBan releases
+	    test2 = plugin.getServer().getPluginManager().getPlugin("easyban");
+        
+        
         if (test != null) {
             mcb = ((mcbans) test).mcb_handler;
 	    bmethod = BansMethod.MCBANS;
+        } else if (test2 != null) {
+	    bmethod = BansMethod.EASYBAN;
         } else {
 	    bmethod = BansMethod.NONE;
 	}
@@ -33,10 +43,17 @@ public class BansHandler {
 	    case MCBANS:
 		MCBan(p, sender, reason, "");
 		break;
+           case EASYBAN:
+                Location loc = p.getLocation();
+                int locx = (int)loc.getX();
+                int locy = 128;
+                int locz = (int)loc.getZ();
+                p.kickPlayer("Zabanovan za griefing (auto ban)");
+                Eban(p, "Griefing na "+locx+","+locy+","+locz+" (auto ban)");
+		break;
 	    case SIMPLEBAN:
 		break;
 	    default: //NONE
-		p.kickPlayer(reason);
 		break;
 	}
     }
@@ -49,10 +66,12 @@ public class BansHandler {
 	    case MCBANS:
 		MCBanKick(p, sender, reason);
 		break;
+            case EASYBAN:
+                p.kickPlayer(reason);
+		break;
 	    case SIMPLEBAN:
 		break;
-	    default: //NONE
-		p.kickPlayer(reason);
+	    default: //NONE		
 		break;
 	}
     }
@@ -64,5 +83,11 @@ public class BansHandler {
 
     private static void MCBanKick(Player player, String sender, String reason) {
 	mcb.kick(player.getName(), sender, reason);
+    }
+    
+    private static void Eban(Player player, String reason) {
+       Bukkit.getServer().dispatchCommand(new ConsoleCommandSender(Bukkit.getServer()),
+               "eban "+player.getName()+" "+reason);  
+
     }
 }
