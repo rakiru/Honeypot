@@ -46,7 +46,7 @@ public class BansHandler {
            case EASYBAN:
                 Location loc = p.getLocation();
                 int locx = (int)loc.getX();
-                int locy = 128;
+                int locy = (int)loc.getY();
                 int locz = (int)loc.getZ();
                 p.kickPlayer("Zabanovan za griefing (auto ban)");
                 Eban(p, "Griefing na "+locx+","+locy+","+locz+" (auto ban)");
@@ -71,7 +71,8 @@ public class BansHandler {
 		break;
 	    case SIMPLEBAN:
 		break;
-	    default: //NONE		
+	    default: //NONE
+		
 		break;
 	}
     }
