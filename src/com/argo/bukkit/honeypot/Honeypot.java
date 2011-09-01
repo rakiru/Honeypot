@@ -53,6 +53,9 @@ public class Honeypot extends JavaPlugin {
 			break;
 		case MCBANS:
 			System.out.println("Honeypot: MCBans plugin found, using that.");
+                        break;
+                case EASYBAN:
+			System.out.println("Honeypot: EasyBan plugin found, using that.");
 			break;
 		case SIMPLEBAN:
 			System.out.println("Honeypot: SimpleBan plugin found, using that.");
