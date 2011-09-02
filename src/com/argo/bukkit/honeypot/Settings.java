@@ -9,10 +9,10 @@ public class Settings {
     private static final String propertiesPath = "plugins/Honeypot/honeypot.properties";
 
     private static String honeypotMsg = "[Honeypot] You have been caught destroying a honeypot block.";
-    private static String honeypotBanReason = "Destroyed honeypot block.";  //ban reason (all ban systems except vanilla)
+    private static String honeypotBanReason = "Destroyed honeypot block.";  //ban reason (all ban systems)
     private static String kickBanSender = "[Honeypot]"; //who will kick / ban when hp get destroyed? Only MCBANS, in other cases it will be Console !
     private static int toolID = 271;
-    private static boolean doLoc = false;  //shall we insert into reason last loc. of player?
+    private static boolean doLoc = false;  //shall we insert into reason last loc. of player (only mcbans and EB)?
     private static boolean doLog = true;
     private static boolean doKick = true;
     private static boolean doBan = false;
