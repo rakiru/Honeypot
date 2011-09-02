@@ -1,9 +1,7 @@
-
 package com.argo.bukkit.honeypot;
 
 import java.io.File;
 
-import org.bukkit.World;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -48,8 +46,8 @@ public class Honeypot extends JavaPlugin {
 		}
 
 		switch(BansHandler.setupbanHandler(this)) {
-		case NONE:
-			System.out.println("Honeypot: Didn't find MCBans plugin, using default.");
+		case VANILLA:
+			System.out.println("Honeypot: Didn't find ban plugin, using vanilla.");
 			break;
 		case MCBANS:
 			System.out.println("Honeypot: MCBans plugin found, using that.");
@@ -61,7 +59,7 @@ public class Honeypot extends JavaPlugin {
 			System.out.println("Honeypot: SimpleBan plugin found, using that.");
 			break;
 		default:
-			System.out.println("Honeypot: Didn't find MCBans plugin, using default.");
+			System.out.println("Honeypot: Didn't find ban plugin, using vanilla.");
 			break;
 		}
 
