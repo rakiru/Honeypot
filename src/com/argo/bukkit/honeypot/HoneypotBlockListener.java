@@ -12,7 +12,7 @@ public class HoneypotBlockListener extends BlockListener {
     private static Honeypot plugin;
 
     public HoneypotBlockListener(Honeypot instance) {
-        plugin = instance;
+    	plugin = instance;
     }
 
     @Override
