@@ -1,6 +1,6 @@
-name: Honeypot for EB
+name: Honeypot
 main: com.argo.bukkit.honeypot.Honeypot
-version: 0.7.2
+version: 0.7.1
 author: Argomirr,morganm,dog.big
 commands:
  honeypot:
