@@ -1,9 +1,9 @@
 name: Honeypot for EB
 main: com.argo.bukkit.honeypot.Honeypot
-version: 0.7.1f
+version: 0.7.2
 author: Argomirr,morganm,dog.big
 commands:
  honeypot:
-  description: Enables Op's to create honeypots by right clicking a block with a wooden axe. Also with EB.
+  description: Enables Op's to create honeypots by right clicking a block with a wooden axe.
   usage: /<command>
   aliases: [hp]
