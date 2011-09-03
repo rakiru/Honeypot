@@ -1,3 +1,9 @@
+v0.8 - Sept 3, 2011
+- added an "offenseCount" parameter, which defines the number of Honeypot
+offenses before action is taken.  When action is taken, the Honeypot blocks
+that were broken are automatically rolled back. Defaults to 1, which is the
+previous default behavior (one block break = immediate action).
+
 v0.7.2 - Sept 2, 2011
 - added support for vanilla and EasyBan
 - added 'honeypotBanReason' config option (ban reason for EB and MCBANS), defaults to "Destroyed honeypot block."

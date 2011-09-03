@@ -7,7 +7,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerListener;
 
 public class HoneypotPlayerListener extends PlayerListener {
-    private Honeypot plugin;
+    @SuppressWarnings("unused")
+	private Honeypot plugin;
 
     public HoneypotPlayerListener(Honeypot instance) {
     	plugin = instance;

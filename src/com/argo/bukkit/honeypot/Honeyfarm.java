@@ -37,7 +37,7 @@ import com.argo.util.TextFileHandler;
  * HoneyPot's are all located between X:100 and X:120, then any block breaks outside of those bounds only have
  * to do a few integer checks and then we're done: even faster than a Hash calculation/lookup.
  * 
- * @author morganm
+ * @author Argomirr, morganm
  *
  */
 public class Honeyfarm {
@@ -125,8 +125,6 @@ public class Honeyfarm {
 		// start by assuming boundsChecking is true, change it to false if we find a condition otherwise
 		useBoundsChecking = true;
 
-		World world = null;
-		
 		for(Location l : potsMap.keySet()) {
 			int x, y, z;
 			x = l.getBlockX();
