@@ -8,7 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class CmdHoneypot implements CommandExecutor {
-    private Honeypot plugin;
+    @SuppressWarnings("unused")
+	private Honeypot plugin;
 
     public CmdHoneypot(Honeypot instance) {
     	plugin = instance;

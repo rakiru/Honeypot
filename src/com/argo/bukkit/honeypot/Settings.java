@@ -12,6 +12,7 @@ public class Settings {
     private static String honeypotBanReason = "Destroyed honeypot block.";  //ban reason (all ban systems)
     private static String kickBanSender = "[Honeypot]"; //who will kick / ban when hp get destroyed? Only MCBANS, in other cases it will be Console !
     private static int toolID = 271;
+    private static int offenseCount = 1;
     private static boolean doLoc = false;  //shall we insert into reason last loc. of player (only mcbans and EB)?
     private static boolean doLog = true;
     private static boolean doKick = true;
@@ -27,6 +28,7 @@ public class Settings {
 		new File(propertiesPath).createNewFile();
 
 		props.setInt("tool-id", toolID);
+		props.setInt("offenseCount", offenseCount);
 		props.setString("honeypot-kick-msg", honeypotMsg);
                 props.setString("honeypot-ban-reason", honeypotBanReason);
                 props.setString("sender-of-kickban", kickBanSender); 
@@ -41,6 +43,7 @@ public class Settings {
 	    } else {
 		props.load(new FileInputStream(propertiesPath));
 		toolID = props.getInt("tool-id", toolID);
+		offenseCount = props.getInt("offenseCount", offenseCount);
 		honeypotMsg = props.getString("honeypot-kick-msg", honeypotMsg);
                 honeypotBanReason = props.getString("honeypot-ban-reason", honeypotBanReason);
                 kickBanSender = props.getString("sender-of-kickban", kickBanSender);
@@ -57,6 +60,10 @@ public class Settings {
 
 	
 	return true;
+    }
+    
+    public static int getOffenseCount() {
+    	return offenseCount;
     }
 
     public static String getPotMsg() {
