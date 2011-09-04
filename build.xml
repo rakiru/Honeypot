@@ -1,11 +1,15 @@
 <?xml version="1.0"?>
-<project name="HoneyPot" default="dist" basedir=".">
+<project name="Honeypot" default="dist" basedir=".">
+        <property file="${basedir}/build.local.properties" />
+        <property file="${basedir}/build.properties" />
 
-	<property name="src.home" location="src" />
-	<property name="build.home" location="bin" />
-	<property name="config.home" location="src" />
-	<property name="dist.home" location="dist" />
-	<property name="jarfile" location="${dist.home}/Honeypot.jar" />
+	<path id="project.classpath">
+		<fileset dir="${lib.home}">
+			<include name="**/*.jar" />
+			<include name="**/*.zip" />
+		</fileset>
+		<pathelement path="${build.home}" />
+	</path>
 
 	<target name="prepare">
 		<mkdir dir="${build.home}" />
@@ -18,16 +22,21 @@
 	</target>
 
 	<target name="compile" depends="prepare" description="Compile all source code">
-		<javac srcdir="${src.home}" destdir="${build.home}" />
+		<javac srcdir="${src.home}" destdir="${build.home}" >
+			<classpath refid="project.classpath" />
+		</javac>
 	</target>
 
 	<target name="dist" depends="compile" description="Generates distribution jar file">
-                <copy todir="${build.home}">
-                        <fileset dir="${config.home}">
-                                <include name="**/*.yml"/>
-                        </fileset>
-                </copy>
+		<copy todir="${build.home}">
+			<fileset dir="${config.home}">
+				<include name="**/*.yml"/>
+			</fileset>
+		</copy>
 
-		<jar jarfile="${jarfile}" basedir="${build.home}" />
+		<jar jarfile="${jarfile}" >
+			<fileset dir="${build.home}" />
+		</jar>
 	</target>
+
 </project>
