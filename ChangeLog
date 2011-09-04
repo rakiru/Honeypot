@@ -1,5 +1,11 @@
+v0.9 - Sept 4, 2011
+- removed support for SimpleBans
+- added support for KiwiAdmin plugin
+- changed the behaviour when player got kicked using EasyBan method (not banned)
+- source code format and cleanup
+
 v0.8 - Sept 3, 2011
-- added an "offenseCount" parameter, which defines the number of Honeypot
+- Added an "offenseCount" parameter, which defines the number of Honeypot
 offenses before action is taken.  When action is taken, the Honeypot blocks
 that were broken are automatically rolled back. Defaults to 1, which is the
 previous default behavior (one block break = immediate action).
