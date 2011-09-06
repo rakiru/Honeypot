@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class CmdHoneypot implements CommandExecutor {
-    @SuppressWarnings("unused")
 	private Honeypot plugin;
 
     public CmdHoneypot(Honeypot instance) {
@@ -26,7 +25,7 @@ public class CmdHoneypot implements CommandExecutor {
     					player.sendMessage(ChatColor.GREEN + "Honeypot creation cancelled.");
     					Honeyfarm.setPotSelect(player, false);
     				} else {
-    					player.sendMessage(ChatColor.GREEN + "Right click a block with a " + Settings.getToolId() + " to create a honeypot. When finished, use /hp again.");
+    					player.sendMessage(ChatColor.GREEN + "Right click a block with a " + plugin.getConfig().getToolId() + " to create a honeypot. When finished, use /hp again.");
     					Honeyfarm.setPotSelect(player, true);
     				}
     			}

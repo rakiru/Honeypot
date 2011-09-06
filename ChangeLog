@@ -1,3 +1,19 @@
+v1.0 - Sept 5, 2011
+- initial (untested) MCBans3 support
+- added a timer related to the "offenseCount" code - if offenseCount is > 1
+and someone trips a Honeypot block but doesn't exceed the offenseCount, the
+code will reset the broken Honeypot blocks within 5 minutes of that player
+logging out.
+- added support for standard Bukkit config.yml file. If you have an existing
+old-style .properties file, Honeypot will still use that. If you don't, it
+will create and prefer a new-style Bukkit config.yml instead.
+- added support for "ban points", an advanced form of the offenseCount
+algorithm. Read documentation for more details. This feature is ONLY supported
+in new config.yml config syntax.
+- version bump to 1.0 since there were some major new features to justify more
+than a minor version bump and I think this plugin has been around and in use
+long enough to qualify for a non-beta version number
+
 v0.9 - Sept 4, 2011
 - removed support for SimpleBans
 - added support for KiwiAdmin plugin
