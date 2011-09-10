@@ -22,7 +22,7 @@ public class CmdHoneypot implements CommandExecutor {
     				player.sendMessage(ChatColor.RED + "You are not allowed to use this command.");
     			} else {
     				if(Honeyfarm.getPotSelect(player)) {
-    					player.sendMessage(ChatColor.GREEN + "Honeypot creation cancelled.");
+    					player.sendMessage(ChatColor.GREEN + "Honeypot creation finished.");
     					Honeyfarm.setPotSelect(player, false);
     				} else {
     					player.sendMessage(ChatColor.GREEN + "Right click a block with a " + plugin.getConfig().getToolId() + " to create a honeypot. When finished, use /hp again.");

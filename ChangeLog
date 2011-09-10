@@ -1,3 +1,7 @@
+v1.0.1 - Sept 10, 2011
+- fixed MCBans3 support to report finding it correctly (it was finding and
+using it before, but was falsely reporting Vanilla on startup)
+
 v1.0 - Sept 5, 2011
 - initial (untested) MCBans3 support
 - added a timer related to the "offenseCount" code - if offenseCount is > 1
