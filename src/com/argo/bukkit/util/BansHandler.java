@@ -101,10 +101,10 @@ public class BansHandler {
                 VanillaBan(p);
                 break;
             case MCBANS:
-                MCBan(p, sender, reason, "");
+                MCBan(p, sender, reason, "g");
                 break;
             case MCBANS3:
-            	MCBan3(p, sender, reason, "");
+            	MCBan3(p, sender, reason, "g");
             	break;
             case EASYBAN:
                 // also fix for black screen after BAN
